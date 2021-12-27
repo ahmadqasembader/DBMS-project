@@ -60,7 +60,7 @@
     <property name="title">
      <string>Enter Login details</string>
     </property>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="userIDLogin">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -96,7 +96,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Username</string>
+      <string>UserID</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -118,7 +118,7 @@
       <string>Password</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="passwordLogin">
      <property name="geometry">
       <rect>
        <x>10</x>
