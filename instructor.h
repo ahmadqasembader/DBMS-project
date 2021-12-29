@@ -15,6 +15,8 @@ public:
     explicit Instructor(QWidget *parent = nullptr);
     ~Instructor();
 
+private slots:
+
 private:
     Ui::Instructor *ui;
 };

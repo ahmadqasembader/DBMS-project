@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
 #include <QtSql>
+#include <QDialog>
 #include <QSqlDatabase>
 #include <QMessageBox>
 #include <mysql/mysql.h>
@@ -15,13 +15,13 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
+public slots:
     void on_pushButton_clicked();
+
 
 private:
     Ui::MainWindow *ui;
