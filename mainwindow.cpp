@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <mysql/mysql.h>
+#include "student.h"
 #include <iostream>
 
 struct connection_details{
@@ -36,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     /*ui->comboBox->addItem("Student");
     ui->comboBox->addItem("Instructor");
     ui->comboBox->addItem("Faculty coordinator");*/
+
 }
 //QMessageBox msgbox;
 MainWindow::~MainWindow()
@@ -69,31 +71,25 @@ void MainWindow::on_pushButton_clicked()
        std::cout<<r<<std::endl;
        if(qrow == SId){
            loginMessage.setText("Login successful");
-           std::cout<<"True";
+           this->hide();
+           std = new Student(this);
+           std->show();
+           std->ui->label_3->setText("Hello");   //label_3 ->setText("HEllo");
            break;
 
        }
         else
            loginMessage.setText("Login unsuccessful");
     }
-    loginMessage.exec();
-    /* QMessageBox box;
-    if(row == NULL){
-        box.setText("Username or password was incorrect");
-    }
-    else{
-        box.setText("Successful login");
-        box.setText(row[0]);
-        for(int i = 0; i < 5; i++){
-            std::cout<<row[i];
-        }
-    }
-        box.exec();
-    int rows = mysql_num_rows(res);
-    for(int i = 0; i < rows; i++){
+    //loginMessage.exec();
 
-    }
-    row = NULL;*/
     mysql_free_result(res);
     // mysql_close(con);
+    //return SId;
+}
+
+QString MainWindow::getui()
+{
+    QString Id = ui->userIDLogin->text();
+    return Id;
 }
