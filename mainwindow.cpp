@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <mysql/mysql.h>
-#include "student.h"
 #include <iostream>
+#include <student.h>
 
 struct connection_details{
   const char *server, *user, *password, *database;
@@ -34,9 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    /*ui->comboBox->addItem("Student");
-    ui->comboBox->addItem("Instructor");
-    ui->comboBox->addItem("Faculty coordinator");*/
 
 }
 //QMessageBox msgbox;
@@ -72,11 +69,9 @@ void MainWindow::on_pushButton_clicked()
        if(qrow == SId){
            loginMessage.setText("Login successful");
            this->hide();
-           std = new Student(this);
+           std = new Student(this, SId);
            std->show();
-           std->ui->label_3->setText("Hello");   //label_3 ->setText("HEllo");
            break;
-
        }
         else
            loginMessage.setText("Login unsuccessful");
@@ -85,11 +80,5 @@ void MainWindow::on_pushButton_clicked()
 
     mysql_free_result(res);
     // mysql_close(con);
-    //return SId;
 }
 
-QString MainWindow::getui()
-{
-    QString Id = ui->userIDLogin->text();
-    return Id;
-}

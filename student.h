@@ -2,7 +2,7 @@
 #define STUDENT_H
 
 #include <QDialog>
-
+#include "mainwindow.h"
 namespace Ui {
 class Student;
 }
@@ -13,12 +13,18 @@ class Student : public QDialog
 
 public:
     explicit Student(QWidget *parent = nullptr);
+    explicit Student(QWidget *parent, QString ID);
     ~Student();
-
-private slots:
+    Ui::Student *ui;
 
 private:
-    Ui::Student *ui;
+    MainWindow *main;
+    QString Id;
+
+private slots:
+    void on_pushButton_clicked();
+    //void on_label_3_windowIconTextChanged(const QString &iconText);
+    void receiveData(QString);
 };
 
 #endif // STUDENT_H
