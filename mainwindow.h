@@ -6,8 +6,9 @@
 #include <QSqlDatabase>
 #include <QMessageBox>
 #include <mysql/mysql.h>
-
-class Student;
+#include "student.h"
+#include "instructor.h"
+#include "facultycoordinator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,9 @@ public:
 
 private:
     Student *std;
+    Instructor *instr;
+    facultyCoordinator *factCord;
+
 
 private slots:
     void on_pushButton_clicked();

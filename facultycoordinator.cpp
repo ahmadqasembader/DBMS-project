@@ -8,6 +8,14 @@ facultyCoordinator::facultyCoordinator(QWidget *parent) :
     ui->setupUi(this);
 }
 
+facultyCoordinator::facultyCoordinator(QString id, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::facultyCoordinator)
+{
+    sId = id;
+    ui->setupUi(this);
+}
+
 facultyCoordinator::~facultyCoordinator()
 {
     delete ui;

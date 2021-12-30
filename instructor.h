@@ -13,12 +13,14 @@ class Instructor : public QDialog
 
 public:
     explicit Instructor(QWidget *parent = nullptr);
+     explicit Instructor(QString id, QWidget *parent = nullptr);
     ~Instructor();
 
 private slots:
 
 private:
     Ui::Instructor *ui;
+    QString sId;
 };
 
 #endif // INSTRUCTOR_H

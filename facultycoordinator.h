@@ -13,12 +13,14 @@ class facultyCoordinator : public QDialog
 
 public:
     explicit facultyCoordinator(QWidget *parent = nullptr);
+    explicit facultyCoordinator(QString id, QWidget *parent = nullptr);
     ~facultyCoordinator();
 
 private slots:
 
 private:
     Ui::facultyCoordinator *ui;
+    QString sId;
 };
 
 #endif // FACULTYCOORDINATOR_H
