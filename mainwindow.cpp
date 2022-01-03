@@ -1,34 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <mysql/mysql.h>
+#include "databaseconnection.h"
 #include <iostream>
-#include <string.h>
-//#include <algorithm>
+#include<sstream>
 
-struct connection_details{
-  const char *server, *user, *password, *database;
-
-};
-
-MYSQL *mysql_connection_setup(struct connection_details mysql_details){
-    std::cout<<"IN here!";
-    MYSQL *connection;
-    connection = mysql_init(NULL);
-
-    if(!mysql_real_connect(connection, mysql_details.server, mysql_details.user,
-                           mysql_details.password, mysql_details.database, 0, NULL, 0)){
-        QMessageBox msgbox;
-        msgbox.setText("Connection failed");
-        std::cout<<"connection failed";
-        msgbox.exec();
-        exit(1);
-    }
-    QMessageBox msgbox;
-    std::cout<<"Connection successful";
-    msgbox.setText("Connection successful");
-    msgbox.exec();
-    return connection;
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -50,28 +25,21 @@ void MainWindow::on_pushButton_clicked()
     MYSQL_RES *res;
     MYSQL_ROW row = NULL;
     struct connection_details mysqlD;
-    mysqlD.server = "localhost";
-    mysqlD.user = "root";
-    mysqlD.password = " kasbeat2,";
-    mysqlD.database = "universityDatabase";
-    //QMessageBox msgbox;
+    //details removed
     con = mysql_connection_setup(mysqlD);
-    QString sId = ui->userIDLogin->text();
+    QString roleId = ui->userIDLogin->text();
     QString password = ui->passwordLogin->text();
     //char table[20] = "student";
     QString role = ui->RolecomboBox->currentText();
-    const QByteArray comboBoxSelect = role.toUtf8();
-    int size = comboBoxSelect.size();
-    std::cout<<size;
-    //comboSelect[7];
     char table[20];
-    table[qMin(19, comboBoxSelect.size())] = '\0';
-    std::copy(comboBoxSelect.constBegin(),
-              comboBoxSelect.constBegin() + qMin(19, comboBoxSelect.size()), table);
-    char query[50] = "select ID from ";
-    strcat(query, table);
-    //std::string que = "select name from student";
-    mysql_query(con, query);
+    QstringToCharArray(role, table);
+    //char query[50] = "select ID from ";
+    std::ostringstream str;
+    str<<"Select ID from " <<table;
+    std::string query = str.str();
+    //std::cout<<query;
+    //strcat(query, table);
+    mysql_query(con, query.c_str());
     res = mysql_store_result(con);
 
     QMessageBox loginMessage;
@@ -79,22 +47,22 @@ void MainWindow::on_pushButton_clicked()
         //std::cout<<row[0];
         std::string r = row[0];
         QString qrow = QString::fromStdString(r);
-       std::cout<<r<<std::endl;
-       if(qrow == sId){
+       //std::cout<<r<<std::endl;
+       if(qrow == roleId){
            if(role == "student"){
                this->hide();
-               std = new Student(this, sId);
+               std = new Student(this, roleId);
                std->show();
            }
            else if(role == "instructor"){
                this ->hide();
-               instr = new Instructor(sId, this);
+               instr = new Instructor(roleId, this);
                instr->show();
            }
 
-           else if(role == "faculty coordination"){
+           else if(role == "faculty_coordinator"){
                this ->hide();
-               factCord = new facultyCoordinator(sId, this);
+               factCord = new facultyCoordinator(roleId, this);
                factCord->show();
            }
 
@@ -107,6 +75,6 @@ void MainWindow::on_pushButton_clicked()
     //loginMessage.exec();
 
     mysql_free_result(res);
-    // mysql_close(con);
+    mysql_close(con);
 }
 

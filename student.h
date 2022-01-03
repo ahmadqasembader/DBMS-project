@@ -12,12 +12,12 @@ class Student : public QDialog
 
 public:
     explicit Student(QWidget *parent = nullptr);
-    explicit Student(QWidget *parent, QString ID);
+    explicit Student(QWidget *parent, QString);
     ~Student();
     Ui::Student *ui;
 
 private:
-    QString Id;
+    QString id;
 };
 
 #endif // STUDENT_H

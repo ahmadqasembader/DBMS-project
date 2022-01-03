@@ -9,15 +9,14 @@ Student::Student(QWidget *parent) :
     ui->setupUi(this);
 }
 
-Student::Student(QWidget *parent, QString name) :
+Student::Student(QWidget *parent, QString s_id) :
     QDialog(parent),
     ui(new Ui::Student)
 {
     ui->setupUi(this);
-    Id = name;
-    ui->label_3->setText(Id);
+    id = s_id;
+    ui->label_3->setText(id);
 }
-
 
 Student::~Student()
 {

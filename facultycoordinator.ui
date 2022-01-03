@@ -44,10 +44,10 @@
     <widget class="QGroupBox" name="instructorprofile">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>50</y>
+       <x>50</x>
+       <y>40</y>
        <width>291</width>
-       <height>191</height>
+       <height>221</height>
       </rect>
      </property>
      <property name="palette">
@@ -213,6 +213,9 @@
 	background-color: white;
 }</string>
       </property>
+      <property name="text">
+       <string/>
+      </property>
      </widget>
      <widget class="QLabel" name="label_24">
       <property name="geometry">
@@ -330,21 +333,6 @@
        <string> Dept_name:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_5">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>100</y>
-        <width>113</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#lineEdit_5{
-	background-color: white;
-}</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_26">
       <property name="geometry">
        <rect>
@@ -410,6 +398,34 @@
 }</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>170</y>
+        <width>121</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add new course</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>100</y>
+        <width>111</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#comboBox{
+	background-color: white;
+}</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="newteacher">
      <property name="geometry">
@@ -417,7 +433,7 @@
        <x>400</x>
        <y>50</y>
        <width>291</width>
-       <height>191</height>
+       <height>211</height>
       </rect>
      </property>
      <property name="palette">
@@ -733,21 +749,6 @@
        <string>Department:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_8">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>100</y>
-        <width>113</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#lineEdit_5{
-	background-color: white;
-}</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_29">
       <property name="geometry">
        <rect>
@@ -813,6 +814,34 @@
 }</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>170</y>
+        <width>121</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add new teacher</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_2">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>100</y>
+        <width>111</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#comboBox_2{
+	background-color: white;
+}</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="newstudent">
      <property name="geometry">
@@ -820,7 +849,7 @@
        <x>210</x>
        <y>290</y>
        <width>291</width>
-       <height>211</height>
+       <height>251</height>
       </rect>
      </property>
      <property name="palette">
@@ -1136,21 +1165,6 @@
        <string>Department:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_11">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>100</y>
-        <width>113</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#lineEdit_5{
-	background-color: white;
-}</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_33">
       <property name="geometry">
        <rect>
@@ -1277,6 +1291,34 @@
       </property>
       <property name="styleSheet">
        <string notr="true">#lineEdit_6{
+	background-color: white;
+}</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>200</y>
+        <width>121</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add new Student</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_3">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>100</y>
+        <width>111</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#comboBox_3{
 	background-color: white;
 }</string>
       </property>

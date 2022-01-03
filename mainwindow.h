@@ -5,7 +5,7 @@
 #include <QtSql>
 #include <QSqlDatabase>
 #include <QMessageBox>
-#include <mysql/mysql.h>
+//#include <mysql/mysql.h>
 #include "student.h"
 #include "instructor.h"
 #include "facultycoordinator.h"
@@ -35,7 +35,5 @@ private slots:
 
 };
 
-struct connection_details;
-MYSQL *mysql_connection_setup(struct connection_details mysql_details);
 
 #endif // MAINWINDOW_H
