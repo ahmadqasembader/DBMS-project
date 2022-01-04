@@ -20,6 +20,7 @@ Instructor::Instructor(QString i_id, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Instructor)
 {
+
     ui->setupUi(this);
     id = i_id;
     MYSQL *con;
@@ -42,7 +43,6 @@ Instructor::Instructor(QString i_id, QWidget *parent) :
     row = mysql_fetch_row(res);
     ui->label_8->setText(row[1]);
     ui->label_4 ->setText(row[2]);
-
 
     QStringListModel *model;
     QStringList list;

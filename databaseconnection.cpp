@@ -2,6 +2,7 @@
 #include <QMessageBox>
 #include <cstring>
 #include <string.h>
+#include <iostream>
 
 MYSQL *mysql_connection_setup(struct connection_details mysql_details){
     MYSQL *connection;
@@ -21,13 +22,14 @@ MYSQL *mysql_connection_setup(struct connection_details mysql_details){
 }
 
 void QstringToCharArray(QString stringToConvert, char newString[]){
-    //int size = strlen(newString);
-    const QByteArray temp = stringToConvert.toUtf8();
-    newString[qMin(99, temp.size())] = '\0';
-    std::copy(temp.constBegin(),
-              temp.constBegin() + qMin(99, temp.size()), newString);
+        /*strcpy(newString, "");
+        const QByteArray temp = stringToConvert.toUtf8();
+        newString[qMin(99, temp.size())] = '\0';
+        std::copy(temp.constBegin(),
+                  temp.constBegin() + qMin(99, temp.size()), newString);*/
+   strcpy(newString, stringToConvert.toStdString().c_str());
+   return;
 }
-
 
 int QStringToInt(QString str, int)
 {
