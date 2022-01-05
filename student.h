@@ -1,8 +1,9 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 
+#include <QtCore>
+#include <QtGui>
 #include <QDialog>
-
 namespace Ui {
 class Student;
 }
@@ -10,18 +11,15 @@ class Student;
 class Student : public QDialog
 {
     Q_OBJECT
-signals:
-    //void sendMessage(const QString &msg);
+
 public:
     explicit Student(QWidget *parent = nullptr);
-    //explicit Student(QWidget *parent = nullptr, QString Id);
+    explicit Student(QWidget *parent, QString);
     ~Student();
-
-public slots:
-    //void buttonClicked();
+    Ui::Student *ui;
 
 private:
-    Ui::Student *ui;
+    //  QStringListModel *model;
 };
 
 #endif // STUDENT_H
