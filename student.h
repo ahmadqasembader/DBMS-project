@@ -1,8 +1,8 @@
 #ifndef STUDENT_H
 #define STUDENT_H
-
 #include <QtCore>
 #include <QtGui>
+#include <QStringList>
 #include <QDialog>
 namespace Ui {
 class Student;
@@ -17,9 +17,11 @@ public:
     explicit Student(QWidget *parent, QString);
     ~Student();
     Ui::Student *ui;
-
 private:
-    //  QStringListModel *model;
+    QStringList course;
+    QStringList semester;
+    QStringList year;
+
 };
 
 #endif // STUDENT_H
