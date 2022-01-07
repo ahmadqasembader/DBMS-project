@@ -22,6 +22,10 @@ private slots:
 private:
     Ui::Instructor *ui;
     QString id;
+    QStringList course;
+    QStringList semester;
+    QStringList year;
+
 };
 
 #endif // INSTRUCTOR_H

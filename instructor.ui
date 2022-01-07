@@ -30,12 +30,15 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">#profiletab{
+    <string notr="true">#coursetab{
+	background-color:  rgb(189,183,107)
+}
+#profiletab{
 	background-color:  rgb(189,183,107)
 }</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="profiletab">
     <attribute name="title">
@@ -44,10 +47,10 @@
     <widget class="QGroupBox" name="instructorprofile">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>40</y>
-       <width>371</width>
-       <height>241</height>
+       <x>120</x>
+       <y>50</y>
+       <width>591</width>
+       <height>261</height>
       </rect>
      </property>
      <property name="palette">
@@ -62,6 +65,33 @@
           </color>
          </brush>
         </colorrole>
+        <colorrole role="Button">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Window">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
        </active>
        <inactive>
         <colorrole role="WindowText">
@@ -73,6 +103,33 @@
           </color>
          </brush>
         </colorrole>
+        <colorrole role="Button">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Window">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
        </inactive>
        <disabled>
         <colorrole role="WindowText">
@@ -81,6 +138,33 @@
            <red>190</red>
            <green>190</green>
            <blue>190</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Button">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+        <colorrole role="Window">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>255</red>
+           <green>255</green>
+           <blue>255</blue>
           </color>
          </brush>
         </colorrole>
@@ -98,10 +182,10 @@
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>280</x>
-        <y>90</y>
-        <width>81</width>
-        <height>81</height>
+        <x>410</x>
+        <y>70</y>
+        <width>121</width>
+        <height>121</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -250,7 +334,7 @@
        <string>PERSONAL INFORMATION</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -652,7 +736,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>110</x>
@@ -686,12 +770,17 @@
       </layout>
      </widget>
     </widget>
+   </widget>
+   <widget class="QWidget" name="coursetab">
+    <attribute name="title">
+     <string>Course info</string>
+    </attribute>
     <widget class="QGroupBox" name="courses_assigned">
      <property name="geometry">
       <rect>
-       <x>390</x>
+       <x>60</x>
        <y>40</y>
-       <width>401</width>
+       <width>671</width>
        <height>241</height>
       </rect>
      </property>
@@ -740,24 +829,54 @@
      <property name="title">
       <string>Courses Assigned</string>
      </property>
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="courseAssignedTable">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>20</y>
-        <width>421</width>
+        <width>671</width>
+        <height>221</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="courses_assigned_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>310</y>
+       <width>671</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <property name="palette">
+      <palette>
+       <active/>
+       <inactive/>
+       <disabled/>
+      </palette>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#courses_assigned{
+	background-color: white
+}</string>
+     </property>
+     <property name="title">
+      <string>Courses info</string>
+     </property>
+     <widget class="QTableWidget" name="courseInfoTable">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>671</width>
         <height>221</height>
        </rect>
       </property>
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Course info</string>
-    </attribute>
-   </widget>
-   <widget class="QWidget" name="tab_2">
+   <widget class="QWidget" name="registertab">
     <attribute name="title">
      <string>Register</string>
     </attribute>
