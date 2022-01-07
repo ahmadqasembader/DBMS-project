@@ -1,34 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <mysql/mysql.h>
-#include "student.h"
+#include "databaseconnection.h"
 #include <iostream>
+#include <sstream>
+#include <cstring>
 
 
-struct connection_details{
-  const char *server, *user, *password, *database;
-
-};
-
-MYSQL *mysql_connection_setup(struct connection_details mysql_details){
-    std::cout<<"IN here!";
-    MYSQL *connection;
-    connection = mysql_init(NULL);
-
-    if(!mysql_real_connect(connection, mysql_details.server, mysql_details.user,
-                           mysql_details.password, mysql_details.database, 0, NULL, 0)){
-        QMessageBox msgbox;
-        msgbox.setText("Connection failed");
-        std::cout<<"connection failed";
-        msgbox.exec();
-        exit(1);
-    }
-    QMessageBox msgbox;
-    std::cout<<"Connection successful";
-    msgbox.setText("Connection successful");
-    msgbox.exec();
-    return connection;
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -36,9 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
 }
+//QMessageBox msgbox;
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -47,42 +23,60 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    //Mysql connection...
     MYSQL *con = NULL;
     MYSQL_RES *res;
     MYSQL_ROW row = NULL;
     struct connection_details mysqlD;
-    mysqlD.server = "localhost";
-    mysqlD.user = "root";
-    mysqlD.password = "9889";
-    mysqlD.database = "university";
-
-    //MySQL connection setup
     con = mysql_connection_setup(mysqlD);
-    QString username = ui->userIDLogin->text();
-    //std::cout<<SId;
+
+    //fetching the enterd ID, password and type of user...
+    QString roleId = ui->userIDLogin->text();
     QString password = ui->passwordLogin->text();
-    mysql_query(con, "select ID from student");
+    QString role = ui->RolecomboBox->currentText();
+
+
+    char table[20];
+    QstringToCharArray(role, table);
+
+    std::ostringstream str;
+    str <<"Select ID from " << table;
+    std::string query = str.str();
+
+    mysql_query(con, query.c_str());
     res = mysql_store_result(con);
 
-
-    //Log in validation
     QMessageBox loginMessage;
     while((row = mysql_fetch_row(res)) != NULL){
         std::string r = row[0];
         QString qrow = QString::fromStdString(r);
-       //std::cout<<r<<std::endl;
-       if(qrow == username){
+
+       if(qrow == roleId){
+           if(role == "student"){
+               this->hide();
+               std = new Student(this, roleId);
+               std->show();
+           }
+           else if(role == "instructor"){
+               this ->hide();
+               instr = new Instructor(roleId, this);
+               instr->show();
+           }
+
+           else if(role == "faculty_coordinator"){
+               this ->hide();
+               factCord = new facultyCoordinator(roleId, this);
+               factCord->show();
+           }
+
            loginMessage.setText("Login successful");
-           this->hide();
-           std = new Student(this);
-           std->show();
            break;
        }
         else
            loginMessage.setText("Login unsuccessful");
     }
 
-
     mysql_free_result(res);
+    mysql_close(con);
 }
 
