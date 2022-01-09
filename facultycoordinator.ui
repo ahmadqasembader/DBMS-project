@@ -35,7 +35,7 @@
 }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="profiletab">
     <attribute name="title">
@@ -398,7 +398,7 @@
 }</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="addNewCourse">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -1783,9 +1783,7 @@
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">#comboBox_4{
-		background-color: white;
-}</string>
+       <string notr="true"/>
       </property>
       <item>
        <property name="text">
@@ -1818,9 +1816,7 @@
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">#comboBox_5{
-		background-color: white;
-}</string>
+       <string notr="true"/>
       </property>
       <item>
        <property name="text">

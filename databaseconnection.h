@@ -13,6 +13,5 @@ struct connection_details{
 
 MYSQL *mysql_connection_setup(struct connection_details mysql_details);
 void QstringToCharArray(QString, char[]);
-int QStringToInt(QString, int);
-
+MYSQL_RES* mysql_execute_query(MYSQL* connection, const char *sql_query);
 #endif // DATABASECONNECTION_H

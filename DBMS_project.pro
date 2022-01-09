@@ -1,4 +1,4 @@
-QT       += core gui sql
+QT       += core gui sql testlib
 LIBS += -L/usr/include/mysql/mysql -lmysqlclient
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,10 +31,11 @@ HEADERS += \
     student.h
 
 FORMS += \
-    facultycoordinator.ui \
     instructor.ui \
     mainwindow.ui \
-    student.ui
+    student.ui \
+    facultycoordinator.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

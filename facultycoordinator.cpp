@@ -23,10 +23,14 @@ facultyCoordinator::facultyCoordinator(QString f_id, QWidget *parent) :
 {
 
     ui->setupUi(this);
+
+    //database connection
     MYSQL_RES *deptRes, *idRes;
     MYSQL_ROW deptRow = NULL, idRow = NULL;
     struct connection_details mysqlD;
     con = mysql_connection_setup(mysqlD);
+
+    //creating QstringList and model for department and course ID
     id = f_id;
     QStringListModel *deptModel;
     QStringListModel *idModel;
@@ -35,38 +39,35 @@ facultyCoordinator::facultyCoordinator(QString f_id, QWidget *parent) :
     QStringList deptList;
     QStringList idList;
 
+    //query for all department; this information will be use for the department comboBox;
     mysql_query(con, "select dept_name from department");
     deptRes = mysql_store_result(con);
+
+    //filling up the department StringList with the result of the query
     while((deptRow = mysql_fetch_row(deptRes)) != NULL){
         deptList<<deptRow[0];
     }
 
+    //querying for the list of course_id and filling the course StringList with the result
     mysql_query(con, "select course_id from course");
     idRes = mysql_store_result(con);
     while((idRow = mysql_fetch_row(idRes)) != NULL){
         idList<<idRow[0];
     }
 
+    //Setting the department and course model
     deptModel->setStringList(deptList);
     idModel->setStringList(idList);
 
+    //using the model to set the comboBox;
     ui->comboBox->setModel(deptModel);
     ui->comboBox->insertItem(0, "choose...");
     ui->comboBox->setCurrentIndex(0);
      ui->comboBox_2->setModel(deptModel);
      ui->comboBox_3->setModel(deptModel);
-
     ui->comboBox_6->setModel(idModel);
-    //ui->comboBox_6->insertItem(0, "choose...");
-    //ui->comboBox_6->setCurrentIndex(0);
-    //ui->comboBox->setItemData(0, QFont("", 15, QFont::StyleItalic), Qt::FontRole);
 
-    //ui->comboBox_2->insertItem(0, "choose...");
-
-    //ui->comboBox_3->insertItem(0, "choose...");
-
-    //ui->comboBox_6->insertItem(0, "choose...");
-
+    //free the MYSQL result structure
     mysql_free_result(deptRes);
     mysql_free_result(idRes);
 }
@@ -78,12 +79,14 @@ facultyCoordinator::~facultyCoordinator()
 }
 
 
-void facultyCoordinator::on_pushButton_clicked()
+void facultyCoordinator::on_addNewCourse_clicked()
 {
     char course_id[20];
     char title[30];
     char dept[40];
     int credit;
+
+    //The if checks makes sure that the ID field of add
     if(ui->lineEdit->text() == NULL){
        QMessageBox::information(this, "ID not entered", "ID field cannot be empty");
     }
@@ -210,44 +213,6 @@ void facultyCoordinator::on_pushButton_4_clicked()
     }
 }
 
-/*void facultyCoordinator::on_lineEdit_35_editingFinished()
-{
-    MYSQL_RES *res;
-    MYSQL_ROW row;
-    QStringListModel *model;
-    QStringList list;
-    char id[6];
-    char instrutor_fac[40];
-    QstringToCharArray(ui->lineEdit_35->text(), id);
-    char query[200] = "select faculty from instructor where ID = ";
-    strcat(query, id);
-    //std::cout<<query;
-    mysql_query(con, query);
-    res = mysql_store_result(con);
-    while((row = mysql_fetch_row(res)) != NULL){
-        strcpy(query, "select course_id from course where faculty = '");
-        strcpy(instrutor_fac, row[0]);
-    }
-    strcat(query, instrutor_fac);
-    strcat(query, "'");
-    //char faculty[] = row[0];
-
-    mysql_query(con, query);
-    res = mysql_store_result(con);
-
-    while((row = mysql_fetch_row(res)) != NULL){
-        list << row[0];
-    }
-    model = new QStringListModel;
-    model->setStringList(list);
-    ui->comboBox_6->setModel(model);
-
-
-    mysql_free_result(res);
-
-}*/
-
-
 void facultyCoordinator::on_pushButton_2_clicked()
 {
     char i_id[6] = "";
@@ -358,7 +323,7 @@ void facultyCoordinator::on_pushButton_5_clicked()
     char s_id[10] = "";
     char i_id[10] = "";
     int flag = 0;
-    char temp[6];
+    char temp[10];
     int status;
 //    ui->lineEdit_37->text().toStdString().c_str();
    // QString hold = ui->lineEdit_37->text(),
@@ -389,8 +354,8 @@ void facultyCoordinator::on_pushButton_5_clicked()
     while((row = mysql_fetch_row(res)) != NULL){
          QstringToCharArray(row[0], temp);
          std::cout<<s_id;
-         std::cout<<"Searching through database: "<<holdId <<"-> " <<temp <<std::endl;
-         if(strcmp(holdId, temp) == 0){
+         std::cout<<"Searching through database: "<<s_id <<"-> " <<temp <<std::endl;
+         if(strcmp(s_id, temp) == 0){
              flag = 1;
              std::cout<<"True";
              break;
@@ -417,8 +382,8 @@ void facultyCoordinator::on_pushButton_5_clicked()
         else{
             char instructorFact[100];
             std::ostringstream tempStr;
-            char query[200] = "select faculty from student where ID = ";
-            strcat(query, s_id);
+            char query[200] = "select faculty from instructor where ID = ";
+            strcat(query, i_id);
             status = mysql_query(con, query);
             if(status != 0){
                 std::cout<<query;
@@ -426,8 +391,9 @@ void facultyCoordinator::on_pushButton_5_clicked()
             }
             else if(status == 0){
                 res = mysql_use_result(con);
-                while((row = mysql_fetch_row(res)) != NULL){}
-                QstringToCharArray(row[0], instructorFact);
+                while((row = mysql_fetch_row(res)) != NULL){
+                    QstringToCharArray(row[0], instructorFact);
+                }
 
                 char holdStudentFaculty[100];
                 tempStr.str("");
@@ -444,14 +410,16 @@ void facultyCoordinator::on_pushButton_5_clicked()
                         QstringToCharArray(row[0], holdStudentFaculty);
                     }
                     if(strcmp(holdStudentFaculty, instructorFact) != 0){
+                        std::cout<<"holdStudentFaculty: " <<holdStudentFaculty <<"-> instructorFaculty: " <<instructorFact <<std::endl;
                         QMessageBox::information(this, "Invalid",
                                                  "Instructor to be assigned to student should be from the same faculty");
                     }
                     else{
                         tempStr.str("");
                         tempStr.clear();
-                        tempStr<<"insert ignore into advisor values('" <<s_id <<"', '" <<i_id <<"')";
+                        tempStr<<"insert ignore into advisor(s_id, i_id) values('" <<s_id <<"', '" <<i_id <<"')";
                         std::string query = tempStr.str();
+                        std::cout<<query;
                         status = mysql_query(con, query.c_str());
                         if(status == 0){
                             QMessageBox::information(this, "Success", "Successful entry!");
