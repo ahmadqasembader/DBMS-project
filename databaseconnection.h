@@ -8,7 +8,7 @@ struct connection_details{
   const char *server = "localhost",
   *user="root",
   *password = " kasbeat2,",
-  *database = "universityDatabase";
+  *database = "ahmadDatabase";
 };
 
 MYSQL *mysql_connection_setup(struct connection_details mysql_details);

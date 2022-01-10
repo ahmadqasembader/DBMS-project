@@ -19,15 +19,15 @@ public:
 
 private slots:
 
-    void on_pushButton_3_clicked();
+    void on_assignCourse_clicked();
 
-    void on_pushButton_4_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_5_clicked();
+    void on_assignInstructorButton_clicked();
 
     void on_addNewCourse_clicked();
+
+    void on_addNewTeacher_clicked();
+
+    void on_addNewStudent_clicked();
 
 private:
     Ui::facultyCoordinator *ui;

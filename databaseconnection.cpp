@@ -19,6 +19,7 @@ void QstringToCharArray(QString stringToConvert, char newString[]){
         strcpy(newString, "");
         const QByteArray temp = stringToConvert.toUtf8();
         newString[qMin(99, temp.size())] = '\0';
+        //std::cout<<"The size of temp: " <<temp.size();
         std::copy(temp.constBegin(),
                   temp.constBegin() + qMin(99, temp.size()), newString);
    //strcpy(newString, stringToConvert.toStdString().c_str());

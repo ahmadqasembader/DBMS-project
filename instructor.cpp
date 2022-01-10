@@ -9,9 +9,9 @@
 #include <QString>
 #include <QDebug>
 
-/*Things to implement if we have some extra time on our hand:
-    1. Add a "load button to the list view so that the list refreshes when we click it"
-*/
+//Things to implement if we have some extra time on our hand:
+   // 1. Add a "load button to the list view so that the list refreshes when we click it"
+
 Instructor::Instructor(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Instructor)
@@ -124,121 +124,145 @@ void Instructor::on_registerButton_clicked()
     int flag = 0;
     std::ostringstream query;
 
-    if(ui->courseIDBox->currentIndex() == 0){
-        QMessageBox::information(this, "Select course_id", "No course ID was selected");
-    }
-    //QString temp = ui->studentID->text();
     QstringToCharArray(ui->studentID->text(), s_id);
-    QstringToCharArray(id, i_id);
+    res = mysql_execute_query(con, "select ID from student");
 
-    //Querying for faculty for both instructor and student to ensure that
-    //the instructor can only register student in the same faculty
-
-     query<<"select faculty from student where ID = '" <<s_id <<"'";
-    res = mysql_execute_query(con, query.str().c_str());
+    //Loop through all ID in student and checks
+    //if the ID entered is found in the Student Database
+    char temp[10];
     while((row = mysql_fetch_row(res)) != NULL){
-        strcpy(studentFaculty, row[0]);
+         QstringToCharArray(row[0], temp);
+         if(strcmp(s_id, temp) == 0){
+             flag = 1;
+             break;
+         }
     }
     mysql_free_result(res);
-
-    query.str("");
-    query.clear();
-    query<<"select faculty from instructor where ID = " <<i_id;
-    res = mysql_execute_query(con, query.str().c_str());
-    while((row = mysql_fetch_row(res)) != NULL){
-        strcpy(instrFaculty, row[0]);
+    if(flag == 0){
+        QMessageBox::information(this, "Check entry", "Student not in database");
     }
+    else{
+        flag = 0;
+        if(ui->courseIDBox->currentIndex() == 0){
+            QMessageBox::information(this, "Select course_id", "No course ID was selected");
+        }
 
-    //check to ensure student and instructor are in the same faculty;
-    if((strcmp(studentFaculty, instrFaculty)) == 0){
-        QStringList groupList, semesterList, yearList;
+        QstringToCharArray(id, i_id);
 
-            char course_id[10];
-            QstringToCharArray(ui->courseIDBox->currentText(), course_id);
-            std::ostringstream query;
+        //Querying for faculty for both instructor and student to ensure that
+        //the instructor can only register student in the same faculty
 
-            query.str("");
-            query.clear();
+         query<<"select faculty from student where ID = '" <<s_id <<"'";
+        res = mysql_execute_query(con, query.str().c_str());
+        while((row = mysql_fetch_row(res)) != NULL){
+            strcpy(studentFaculty, row[0]);
+        }
+        mysql_free_result(res);
 
-            query<<"select sec_id, semester, year "
-                   "from teaches where ID = '" <<i_id <<"' and course_id ='" <<course_id <<"'";
+        query.str("");
+        query.clear();
+        query<<"select faculty from instructor where ID = " <<i_id;
+        res = mysql_execute_query(con, query.str().c_str());
+        while((row = mysql_fetch_row(res)) != NULL){
+            strcpy(instrFaculty, row[0]);
+        }
+        mysql_free_result(res);
 
-            res = mysql_execute_query(con, query.str().c_str());
+        //check to ensure student and instructor are in the same faculty;
+        if((strcmp(studentFaculty, instrFaculty)) == 0){
+            QStringList groupList, semesterList, yearList;
 
-            while((row = mysql_fetch_row(res)) != NULL){
-                groupList<<row[0];
-                semesterList<<row[1];
-                yearList<<row[2];
-            }
+                char course_id[10];
+                QstringToCharArray(ui->courseIDBox->currentText(), course_id);
 
-            if(ui->groupLineEdit->text() != NULL){
-                for(auto &i : groupList){
-                    if(i == ui->groupLineEdit->text()){
-                        flag = 1;
-                        break;
+                query.str("");
+                query.clear();
+
+                query<<"select sec_id, semester, year "
+                       "from teaches where ID = '" <<i_id <<"' and course_id ='" <<course_id <<"'";
+
+                res = mysql_execute_query(con, query.str().c_str());
+
+                //Fetching the group, semester and year of the choosen course_id assigned to instructor
+                while((row = mysql_fetch_row(res)) != NULL){
+                    groupList<<row[0];
+                    semesterList<<row[1];
+                    yearList<<row[2];
+                }
+                mysql_free_result(res);
+                //Check if the group entered is a valid group in that course
+                if(ui->groupLineEdit->text() != NULL){
+                    for(auto &i : groupList){
+                        if(i == ui->groupLineEdit->text()){
+                            flag = 1;
+                            break;
+                        }
                     }
-                }
-                if(flag == 0){
-                    QMessageBox::information(this, "Invalid group entry", "Check course assigned tab "
-                                                                        "for valid group entry");
-                }
-                else{
-                    flag = 0;
-                    if(ui->semesterLineEdit->text() != NULL){
-                        for(auto &i : semesterList){
-                            if(i == ui->semesterLineEdit->text()){
-                                flag = 1;
-                                std::cout<<"found";
-                                break;
+                    if(flag == 0){
+                        QMessageBox::information(this, "Invalid group entry", "Check course assigned tab "
+                                                                            "for valid group entry");
+                    }
+                    else{
+                        flag = 0;
+                        //Check to ensure the instructor has been assigned to take the course for the selected semester
+                        if(ui->semesterLineEdit->text() != NULL){
+                            for(auto &i : semesterList){
+                                if(i == ui->semesterLineEdit->text()){
+                                    flag = 1;
+                                    break;
+                                }
                             }
-                        }
-                        if(flag == 0){
-                            QMessageBox::information(this, "Invalid semester entry", "Check course assigned tab "
-                                                                                "for valid Semester entry");
-                        }
-                        else{
-                            flag = 0;
-                            if(ui->yearLineEdit->text() != NULL){
-                                for(auto &i : yearList){
-                                    if(i == ui->yearLineEdit->text()){
-                                        flag = 1;
-                                        break;
+                            if(flag == 0){
+                                QMessageBox::information(this, "Invalid semester entry", "Check course assigned tab "
+                                                                                    "for valid Semester entry");
+                            }
+                            else{
+                                //Check to ensure the instructor has been assigned to take the course for the selected year
+                                flag = 0;
+                                if(ui->yearLineEdit->text() != NULL){
+                                    for(auto &i : yearList){
+                                        if(i == ui->yearLineEdit->text()){
+                                            flag = 1;
+                                            break;
+                                        }
+                                    }
+                                    if(flag == 0){
+                                        QMessageBox::information(this, "Invalid year entry", "Check course assigned tab "
+                                                                                            "for valid year entry");
+                                    }
+                                    else{
+                                        char semester[8], year[10];
+                                        int group;
+                                        QstringToCharArray(ui->semesterLineEdit->text(), semester);
+                                        QstringToCharArray(ui->yearLineEdit->text(), year);
+                                        group = ui->groupLineEdit->text().toInt();
+
+                                        query.str("");
+                                        query.clear();
+                                        query<<"insert ignore into takes(ID, course_id, sec_id, semester, year, grade)"
+                                               "values('"<<s_id <<"', '"<<course_id<<"', '" <<group <<"', '" <<semester
+                                            <<"', '" <<year <<"', '" <<0 <<"')";
+
+                                       int status = mysql_query(con, query.str().c_str());
+                                       if(status == 0){
+                                           QMessageBox::information(this, "Success", "Registration successful");
+                                       }
+                                       else{
+                                           QMessageBox::information(this, "Unsuccessful", "Make sure the entries are valid");
+                                       }
                                     }
                                 }
-                                if(flag == 0){
-                                    QMessageBox::information(this, "Invalid year entry", "Check course assigned tab "
-                                                                                        "for valid year entry");
-                                }
-                                else{
-                                    char semester[8], year[10];
-                                    int group;
-                                    QstringToCharArray(ui->semesterLineEdit->text(), semester);
-                                    QstringToCharArray(ui->yearLineEdit->text(), year);
-                                    group = ui->groupLineEdit->text().toInt();
-
-                                    query.str("");
-                                    query.clear();
-                                    query<<"insert ignore into takes(ID, course_id, sec_id, semester, year, grade)"
-                                           "values('"<<s_id <<"', '"<<course_id<<"', '" <<group <<"', '" <<semester
-                                        <<"', '" <<year <<"', '" <<0 <<"')";
-
-                                   int status = mysql_query(con, query.str().c_str());
-                                   if(status == 0){
-                                       QMessageBox::information(this, "Success", "Registration successful");
-                                   }
-                                   else{
-                                       QMessageBox::information(this, "Unsuccessful", "Make sure the entries are valid");
-                                   }
-                                }
                             }
                         }
                     }
                 }
-            }
+        }
+        else {
+            QMessageBox::information(this, "Not valid", "Cannot register student from another faculty");
+        }
     }
-    else {
-        QMessageBox::information(this, "Not valid", "Cannot register student from another faculty");
-    }
-    mysql_free_result(res);
 }
+
+
+
 
